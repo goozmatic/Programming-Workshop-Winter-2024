@@ -6,9 +6,13 @@ public class PlayerController : MonoBehaviour
     public float MinX;
     public float MaxX;
 
+    [SerializeField]
+    public GameObject Projectile;
+
     void Update()
     {
         HandleMovement();
+        BasicShooting();
     }
 
     void HandleMovement()
@@ -26,5 +30,14 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.Translate (moveDir * MoveSpeed * Time.deltaTime);
+    }
+
+    void BasicShooting()
+    {
+        if ((Input.GetKeyDown(KeyCode.J)) || Input.GetMouseButtonDown(0))
+        {
+            GameObject projectile = Instantiate(Projectile, gameObject.transform.position, Quaternion.identity);
+            projectile.GetComponent<ProjectileTraits>().HasPlayerSpawned = true;
+        }
     }
 }
